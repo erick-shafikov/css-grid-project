@@ -1,1 +1,6 @@
-Практика верстки на grid-сетках, ознакомитсья с проктом можно по ссылке https://erick-shafikov.github.io/css-grid-project/
+Практика верстки на grid-сетках, c использованием:
+
+-   препроцессора Sass(scss)
+-   предусматривает адаптив
+
+ознакомиться с проектом можно по ссылке https://erick-shafikov.github.io/css-grid-project/
