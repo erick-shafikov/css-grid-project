@@ -1,0 +1,91 @@
+// (I) - главная сетка, выбор именованных grid-area обуславливается адаптивной сетки
+// (II) - убираем side-bar при адаптиве (доп изменения в _sidebar.scss)
+// смещаем секцию с риелторами в отдельный ряд (III)
+
+// COLOR VARIABLES
+$color-primary: #c69963;
+$color-primary-dark: #b28451;
+
+$color-secondary: #101d2c;
+
+$color-grey-light-1: #f9f7f6;
+$color-grey-light-2: #aaa;
+
+$color-grey-dark-1: #54483a;
+$color-grey-dark-2: #6d5d4b;
+
+// FONT VARIABLES
+$font-primary: 'Nunito', sans-serif;
+$font-display: 'Josefin Sans', sans-serif;
+
+//MEDIA-Q
+$bp-largest: 75em; //1200px/16px => 75em === 1200px
+$bp-large: 62.5em; //1000px/16px => 62.5em === 1000px
+$bp-medium: 50em; //800px/16px => 50em === 800px
+$bp-small: 37.5em; //600px/16px => 37.5em === 600px
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+
+    @media only screen and (max-width: $bp-largest) {
+        font-size: 50%;
+    }
+}
+
+body {
+    font-family: $font-primary;
+    color: $color-grey-dark-2;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+//главная сетка по высоте для всех основных блоков(I)
+.container {
+    display: grid;
+    grid-template-rows: 80vh min-content 40vw repeat(3, min-content);
+    //разбиваем на 8 колонок (I)
+    //первая колонка - для sidebar - 8rem
+    // втора колонка в роли border - минимум 6rem максимум 1fr
+    // c 3 по 7 - колонки растягиваются автоматически или занимают 14rem 1400/8
+    // последняя колонка, как вторая
+    grid-template-columns:
+        [sidebar-start] 8rem [sidebar-end full-start] minmax(6rem, 1fr)
+        [center-start] repeat(
+            8,
+            [col-start] minmax(min-content, 14rem) [col-end]
+        )
+        [center-end]
+        minmax(6rem, 1fr)
+        [full-end];
+
+    @media only screen and (max-width: $bp-large) {
+        // добавляем строку сверху (II)
+        grid-template-rows: 6rem 80vh min-content 40vw repeat(3, min-content);
+        grid-template-columns:
+        // убираем side-bar на вверх меняя сетку (II)
+
+            [full-start] minmax(6rem, 1fr)
+            [center-start] repeat(
+                8,
+                [col-start] minmax(min-content, 14rem) [col-end]
+            )
+            [center-end]
+            minmax(6rem, 1fr)
+            [full-end];
+    }
+
+    @media only screen and (max-width: $bp-medium) {
+        // смещаем секцию с риелторами в отдельный ряд (III)
+        // что бы heading занимал весь экран нужно вычесть 6rem (высота sidebar)
+        grid-template-rows: 6rem calc(100vh - 6rem);
+    }
+}
